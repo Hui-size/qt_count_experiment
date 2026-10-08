@@ -4,18 +4,18 @@
 #include <memory>
 #include "calculatorengine.h"
 
-namespace Ui { class CalculatorWindow; }
+namespace Ui { class MainWindow; }
 
-class CalculatorWindow : public QWidget
+class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CalculatorWindow(QWidget *parent = nullptr);
-    ~CalculatorWindow() override;
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
 
 private:
     void handleCommand(const QString &command);
     void updateDisplay();
-    std::unique_ptr<Ui::CalculatorWindow> ui;
+    std::unique_ptr<Ui::MainWindow> ui;
     CalculatorEngine engine;
 };

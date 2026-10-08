@@ -30,6 +30,23 @@ private slots:
         QTest::newRow("replace-operator") << "8 + * 2 equals" << "16";
         QTest::newRow("equals-without-operator") << "5 equals" << "5";
         QTest::newRow("equals-without-second") << "5 + equals" << "5";
+        QTest::newRow("divide-by-zero") << "8 / 0 equals" << "不能除以零";
+        QTest::newRow("digit-after-result") << "2 + 3 equals 7" << "7";
+        QTest::newRow("decimal-after-result") << "2 + 3 equals decimal 5" << "0.5";
+        QTest::newRow("backspace-before-second") << "1 2 + backspace 3 equals" << "15";
+        QTest::newRow("continue-from-result") << "2 + 3 equals * 4 equals" << "20";
+        QTest::newRow("second-decimal") << "1 decimal 2 + 3 decimal decimal 4 equals" << "4.6";
+        QTest::newRow("edit-second") << "1 2 + 3 4 backspace 5 equals" << "47";
+        QTest::newRow("clear-pending") << "1 2 + 3 clear 4 * 2 equals" << "8";
+        QTest::newRow("ce-keeps-operation") << "5 + 9 clearEntry 2 equals" << "7";
+        QTest::newRow("ce-zero-second") << "5 + clearEntry equals" << "5";
+        QTest::newRow("sign-pending") << "5 + sign 2 equals" << "7";
+        QTest::newRow("negative-second") << "5 + 2 sign equals" << "3";
+        QTest::newRow("backspace-result") << "1 2 + 3 equals backspace" << "15";
+        QTest::newRow("recover-after-zero") << "8 / 0 equals 2 + 3 equals" << "5";
+        QTest::newRow("decimal-recovery") << "8 / 0 equals decimal 5" << "0.5";
+        QTest::newRow("zero-backspace") << "0 decimal 0 backspace backspace" << "0";
+        QTest::newRow("repeated-equals") << "2 + 3 equals equals" << "5";
     }
 
     void sequences()
@@ -54,6 +71,52 @@ private slots:
         engine.dispatch("equals");
         QCOMPARE(engine.expression(), QString("12 + 3 ="));
         QCOMPARE(engine.display(), QString("15"));
+    }
+
+    void stateTransitions()
+    {
+        CalculatorEngine engine;
+        QCOMPARE(engine.state(), CalculatorEngine::State::FirstOperand);
+        engine.dispatch("8");
+        engine.dispatch("/");
+        QCOMPARE(engine.state(), CalculatorEngine::State::OperatorPending);
+        engine.dispatch("0");
+        QCOMPARE(engine.state(), CalculatorEngine::State::SecondOperand);
+        engine.dispatch("equals");
+        QCOMPARE(engine.state(), CalculatorEngine::State::Error);
+        QCOMPARE(engine.expression(), QString::fromUtf8("8 ÷ 0 ="));
+        engine.dispatch("+");
+        engine.dispatch("backspace");
+        QVERIFY(engine.hasError());
+        engine.dispatch("clearEntry");
+        QCOMPARE(engine.state(), CalculatorEngine::State::FirstOperand);
+        QCOMPARE(engine.display(), QString("0"));
+        QVERIFY(engine.expression().isEmpty());
+        for (const QString &command : {"2", "+", "3", "equals"})
+            engine.dispatch(command);
+        QCOMPARE(engine.state(), CalculatorEngine::State::Result);
+        engine.dispatch("clearEntry");
+        QVERIFY(engine.expression().isEmpty());
+    }
+
+    void overflowRecovery()
+    {
+        CalculatorEngine engine;
+        const auto enterLargeNumber = [&engine] {
+            for (int digit = 0; digit < 15; ++digit)
+                engine.dispatch("9");
+        };
+        enterLargeNumber();
+        for (int operation = 0; operation < 30 && !engine.hasError(); ++operation) {
+            engine.dispatch("*");
+            enterLargeNumber();
+            engine.dispatch("equals");
+        }
+        QVERIFY(engine.hasError());
+        QCOMPARE(engine.display(), QString::fromUtf8("结果超出范围"));
+        engine.dispatch("clear");
+        QCOMPARE(engine.display(), QString("0"));
+        QVERIFY(engine.expression().isEmpty());
     }
 };
 

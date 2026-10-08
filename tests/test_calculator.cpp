@@ -1,4 +1,4 @@
-#include "calculatorwindow.h"
+#include "mainwindow.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTest>
@@ -9,7 +9,7 @@ class CalculatorUiTest : public QObject
 private slots:
     void initialInterface()
     {
-        CalculatorWindow window;
+        MainWindow window;
         auto *display = window.findChild<QLineEdit *>("displayEdit");
         QVERIFY(display);
         QCOMPARE(display->text(), QString("0"));
@@ -20,7 +20,7 @@ private slots:
 
     void mouseEntry()
     {
-        CalculatorWindow window;
+        MainWindow window;
         for (const QString &name : {"oneButton", "decimalButton", "decimalButton", "twoButton"}) {
             auto *button = window.findChild<QPushButton *>(name);
             QVERIFY(button);
@@ -33,10 +33,16 @@ private slots:
 
     void mouseCalculation()
     {
-        CalculatorWindow window;
+        MainWindow window;
         for (const QString &name : {"oneButton", "decimalButton", "fiveButton", "addButton", "twoButton", "equalsButton"})
             QTest::mouseClick(window.findChild<QPushButton *>(name), Qt::LeftButton);
         QCOMPARE(window.findChild<QLineEdit *>("displayEdit")->text(), QString("3.5"));
+        const QByteArray previewPath = qgetenv("CALCULATOR_PREVIEW_PATH");
+        if (!previewPath.isEmpty()) {
+            window.show();
+            QTest::qWait(30);
+            QVERIFY(window.grab().save(QString::fromLocal8Bit(previewPath)));
+        }
     }
 };
 

@@ -1,8 +1,8 @@
-#include "calculatorwindow.h"
-#include "ui_calculatorwindow.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
-CalculatorWindow::CalculatorWindow(QWidget *parent)
-    : QWidget(parent), ui(std::make_unique<Ui::CalculatorWindow>())
+MainWindow::MainWindow(QWidget *parent)
+    : QWidget(parent), ui(std::make_unique<Ui::MainWindow>())
 {
     ui->setupUi(this);
     for (auto *button : findChildren<QPushButton *>()) {
@@ -14,15 +14,15 @@ CalculatorWindow::CalculatorWindow(QWidget *parent)
     updateDisplay();
 }
 
-CalculatorWindow::~CalculatorWindow() = default;
+MainWindow::~MainWindow() = default;
 
-void CalculatorWindow::handleCommand(const QString &command)
+void MainWindow::handleCommand(const QString &command)
 {
     engine.dispatch(command);
     updateDisplay();
 }
 
-void CalculatorWindow::updateDisplay()
+void MainWindow::updateDisplay()
 {
     ui->displayEdit->setText(engine.display());
     ui->expressionLabel->setText(engine.expression());
