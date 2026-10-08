@@ -40,3 +40,15 @@
 
 学生要求可双击 `.pro` 在本机 Qt Creator 中编译运行，因此增加 `qt_count_experiment.pro`，
 并将 `main.cpp`、`mainwindow.cpp/.h/.ui` 和引擎文件整理到根目录。
+
+## 阶段 5：键盘一致性、样式与最终验证
+
+- keyPressEvent 和子控件 eventFilter 将键盘输入转换为 command，复用鼠标 handleCommand。
+- 支持主键盘、小键盘、Enter、退格、Esc、C 和 Delete；忽略 Ctrl/Alt/Meta 组合键。
+- 在 `.ui` 保存样式表：区分工具、数字、操作符和等号，错误使用红色，待执行操作符高亮。
+- 显示字体根据实际可用宽度缩小，验证最小窗口下 15 位数字完整可见。
+- 新增键盘四则、鼠标键盘等价、混合输入、子控件接收键盘及小键盘事件测试。
+- 原生 Windows 界面测试与引擎测试全部通过，共 59 项功能验证。
+- offscreen 截图不能正确加载本机字体，改用 Windows 平台插件生成并检查最终截图。
+- 通过本机 qmake 构建 `.pro`，使用 windeployqt 创建运行版并启动确认窗口响应。
+- 截图和测试日志保存在 `F:\Codex\huancun`，保留用于后续实验报告与验证。

@@ -13,6 +13,3 @@ HEADERS += \
     calculatorengine.h
 
 FORMS += mainwindow.ui
-
-# 在 Qt Creator 中使用 Qt 6.10.3 MinGW 64-bit Kit。
-# 构建目录由 Qt Creator 单独设置，避免生成文件混入源代码。

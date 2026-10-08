@@ -8,3 +8,11 @@ CMakeUserPresets.json
 *.tmp
 .DS_Store
 Thumbs.db
+.qmake.stash
+.qtcreator/
+Makefile*
+debug/
+release/
+ui_*.h
+moc_*.cpp
+*.o

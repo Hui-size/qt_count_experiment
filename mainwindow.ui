@@ -2,10 +2,25 @@
 <ui version="4.0">
 <class>MainWindow</class>
 <widget class="QWidget" name="MainWindow">
- <property name="geometry"><rect><x>0</x><y>0</y><width>420</width><height>610</height></rect></property>
- <property name="minimumSize"><size><width>350</width><height>560</height></size></property>
+ <property name="geometry"><rect><x>0</x><y>0</y><width>440</width><height>680</height></rect></property>
+ <property name="minimumSize"><size><width>360</width><height>650</height></size></property>
  <property name="windowTitle"><string>计算器 · Qt 实验 1</string></property>
  <property name="focusPolicy"><enum>Qt::StrongFocus</enum></property>
+<property name="styleSheet"><string>QWidget#MainWindow { background: #f4f7fc; font-family: "Microsoft YaHei UI"; color: #20304a; }
+QLabel#titleLabel { color: #25334a; }
+QLabel#expressionLabel { color: #718099; font-size: 14px; }
+QLineEdit#displayEdit { background: transparent; border: none; padding: 6px 10px; color: #18243b; }
+QLineEdit#displayEdit[error="true"] { color: #c13f4e; }
+QPushButton { background: #ffffff; color: #243047; border: 1px solid #e0e7f0; border-radius: 12px; }
+QPushButton:hover { background: #edf2fb; border-color: #c5d1e4; }
+QPushButton:pressed { background: #dce6f7; }
+QPushButton[role="utility"] { background: #e8eef7; color: #52627d; }
+QPushButton[role="operator"] { background: #e3edff; color: #3569cb; }
+QPushButton[active="true"] { background: #c8dcff; border: 1px solid #8eb1f3; }
+QPushButton[role="equals"] { background: #3468e9; color: #ffffff; border-color: #3468e9; }
+QPushButton[role="equals"]:hover { background: #275bd8; }
+QPushButton[role="equals"]:pressed { background: #1d4ec5; }
+QLabel#keyboardHintLabel { color: #8390a6; font-size: 11px; }</string></property>
  <layout class="QVBoxLayout" name="mainLayout">
   <property name="spacing"><number>12</number></property>
   <property name="leftMargin"><number>24</number></property><property name="topMargin"><number>24</number></property>
@@ -35,10 +50,9 @@
 <item row="4" column="2"><widget class="QPushButton" name="decimalButton"><property name="minimumSize"><size><width>64</width><height>64</height></size></property><property name="sizePolicy"><sizepolicy hsizetype="Expanding" vsizetype="Expanding"><horstretch>0</horstretch><verstretch>0</verstretch></sizepolicy></property><property name="font"><font><pointsize>20</pointsize></font></property><property name="focusPolicy"><enum>Qt::NoFocus</enum></property><property name="text"><string>.</string></property><property name="command" stdset="0"><string>decimal</string></property><property name="role" stdset="0"><string>digit</string></property></widget></item>
 <item row="4" column="3"><widget class="QPushButton" name="equalsButton"><property name="minimumSize"><size><width>64</width><height>64</height></size></property><property name="sizePolicy"><sizepolicy hsizetype="Expanding" vsizetype="Expanding"><horstretch>0</horstretch><verstretch>0</verstretch></sizepolicy></property><property name="font"><font><pointsize>20</pointsize></font></property><property name="focusPolicy"><enum>Qt::NoFocus</enum></property><property name="text"><string>=</string></property><property name="command" stdset="0"><string>equals</string></property><property name="role" stdset="0"><string>equals</string></property></widget></item>
   </layout></item>
-  <item><widget class="QLabel" name="keyboardHintLabel"><property name="text"><string>Qt Widgets · 实验 1</string></property><property name="alignment"><set>Qt::AlignCenter</set></property><property name="wordWrap"><bool>true</bool></property></widget></item>
+  <item><widget class="QLabel" name="keyboardHintLabel"><property name="text"><string>数字及 + − * /  ·  Enter =  ·  Backspace 退格&#10;Esc / C 清除  ·  Delete 清除当前数</string></property><property name="alignment"><set>Qt::AlignCenter</set></property><property name="wordWrap"><bool>true</bool></property></widget></item>
  </layout>
 </widget>
 <resources/>
 <connections/>
 </ui>
-

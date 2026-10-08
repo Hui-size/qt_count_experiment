@@ -101,7 +101,7 @@ void CalculatorEngine::inputOperator(QChar operation)
 {
     if (m_state == State::Error)
         return;
-    // 标准计算器按输入顺序计算，2 + 3 × 4 = 20。
+    // 标准计算器按输入顺序计算
     if (m_state == State::SecondOperand) {
         calculate();
         if (m_state == State::Error)
