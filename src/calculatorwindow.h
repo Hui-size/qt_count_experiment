@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <memory>
+#include "calculatorengine.h"
 
 namespace Ui { class CalculatorWindow; }
 
@@ -13,5 +14,8 @@ public:
     ~CalculatorWindow() override;
 
 private:
+    void handleCommand(const QString &command);
+    void updateDisplay();
     std::unique_ptr<Ui::CalculatorWindow> ui;
+    CalculatorEngine engine;
 };
