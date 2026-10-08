@@ -1,0 +1,10 @@
+build*/
+dist/
+CMakeUserPresets.json
+*.user
+*.user.*
+*.autosave
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
