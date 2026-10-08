@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-find_package(Qt6 6.9 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 6.10.3 REQUIRED COMPONENTS Widgets)
 add_library(calculator_engine STATIC src/calculatorengine.cpp src/calculatorengine.h)
 target_include_directories(calculator_engine PUBLIC src)
 target_link_libraries(calculator_engine PUBLIC Qt6::Core)

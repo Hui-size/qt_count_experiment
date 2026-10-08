@@ -30,6 +30,14 @@ private slots:
         QTest::mouseClick(window.findChild<QPushButton *>("clearButton"), Qt::LeftButton);
         QCOMPARE(window.findChild<QLineEdit *>("displayEdit")->text(), QString("0"));
     }
+
+    void mouseCalculation()
+    {
+        CalculatorWindow window;
+        for (const QString &name : {"oneButton", "decimalButton", "fiveButton", "addButton", "twoButton", "equalsButton"})
+            QTest::mouseClick(window.findChild<QPushButton *>(name), Qt::LeftButton);
+        QCOMPARE(window.findChild<QLineEdit *>("displayEdit")->text(), QString("3.5"));
+    }
 };
 
 QTEST_MAIN(CalculatorUiTest)
